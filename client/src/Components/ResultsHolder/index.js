@@ -7,9 +7,12 @@ function ResultsHolder(props) {
   function makeRequest(a) {
     axios.post("/api/get-links", { data: a })
     .then((res) => {
-      console.log(res.data)
+      props.resetAndSetSearchResults(res.data)
+      props.setAppState("playing")
     })
-    console.log(a);
+    .catch(err => {
+      console.log(err.message)
+    }) 
   }
 
   return (

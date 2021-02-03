@@ -17,19 +17,25 @@ async function wikiGetAndParseHTML(_url) {
   const aTags = root.querySelectorAll("a");
   const resArr = [];
   aTags.forEach((tag) => {
+    console.log(tag)
     let _tag = tag.rawAttrs;
     if (_tag.includes("/wiki/")) {
-      _tag = _tag.split(" ")
-      let tmp = []
+      _tag = _tag.split(" ");
       for (let i = 0; i < _tag.length; i++) {
-        if (_tag[i].includes("href") || _tag[i].includes("title")) {
-          tmp.push(_tag[i])
+        if (
+          _tag[i].includes("href") &&
+          !_tag[i].includes(":") &&
+          !_tag[i].includes("hreflang") &&
+          !_tag[i].includes("Main_Page") &&
+          !_tag[i].includes("wikimedia")
+        ) {
+          _tag[i] = _tag[i].split("/wiki/")[1].split('"')[0];
+          resArr.push(_tag[i]);
         }
       }
-      resArr.push(tmp);
     }
   });
-  return resArr
+  return resArr;
 }
 
 exports.wikiSearch = wikiSearch;
