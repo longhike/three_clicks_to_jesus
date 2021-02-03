@@ -1,5 +1,5 @@
 const express = require("express");
-const { wikiSearch, wikiGetAndParseHTML } = require("./wiki-utils")
+const { wikiSearch, wikiGetAndParseHTML } = require("./wiki-utils");
 
 const router = express.Router();
 
@@ -18,16 +18,12 @@ router.post("/api/search", (req, res) => {
 
 router.post("/api/get-links", (req, res) => {
   try {
-    const _url = `https://en.wikipedia.org/wiki/${req.body.data}`
-    wikiGetAndParseHTML(_url)
-    res.send("Hooray!")
-  } catch(err) {
-    console.log(err.message)
-    res.sendStatus(500)
+    const _url = `https://en.wikipedia.org/wiki/${req.body.data}`;
+    wikiGetAndParseHTML(_url).then((data) => res.json(data));
+  } catch (err) {
+    console.log(err.message);
+    res.sendStatus(500);
   }
-})
-
-
-
+});
 
 module.exports = router;

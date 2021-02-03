@@ -12,19 +12,24 @@ async function wikiSearch(term) {
 }
 
 async function wikiGetAndParseHTML(_url) {
-  const response = await axios.get(_url)
-  const root = HTMLParser.parse(response.data)
-  const aTags = root.querySelectorAll("a")
-  const resArr = []
+  const response = await axios.get(_url);
+  const root = HTMLParser.parse(response.data);
+  const aTags = root.querySelectorAll("a");
+  const resArr = [];
   aTags.forEach((tag) => {
-    let _tag = tag.rawAttrs
+    let _tag = tag.rawAttrs;
     if (_tag.includes("/wiki/")) {
-      resArr.push(_tag)
+      _tag = _tag.split(" ")
+      let tmp = []
+      for (let i = 0; i < _tag.length; i++) {
+        if (_tag[i].includes("href") || _tag[i].includes("title")) {
+          tmp.push(_tag[i])
+        }
+      }
+      resArr.push(tmp);
     }
-  })
-  console.log(resArr)
-  
-  
+  });
+  return resArr
 }
 
 exports.wikiSearch = wikiSearch;
