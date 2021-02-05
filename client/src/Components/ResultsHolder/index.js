@@ -7,6 +7,7 @@ function ResultsHolder(props) {
   function makeRequest(a) {
     axios.post("/api/get-links", { data: a })
     .then((res) => {
+      props.setPage(a)
       props.resetAndSetSearchResults(res.data)
       props.setAppState("playing")
     })
@@ -24,14 +25,14 @@ function ResultsHolder(props) {
                 key={idx}
                 onClick={() => makeRequest(el.title.split(" ").join("_"))}
               >
-                <h4 id={el.pageid}>
+                <h5 id={el.pageid}>
                   <strong>{el.title}</strong>
-                </h4>
+                </h5>
                 <p dangerouslySetInnerHTML={{ __html: el.snippet }} />
               </li>
             );
           })
-        : "Your results will be shown here"}
+        : <p style={{margin: "auto", textAlign: "center"}}>Your results will be shown here</p> }
     </ul>
   );
 }

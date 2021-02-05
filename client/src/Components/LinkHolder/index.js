@@ -1,23 +1,28 @@
 import React from "react";
 import axios from "axios";
-import { Spinner } from "react-bootstrap";
+import { makeSubArrays } from "./util";
 
 function LinkHolder(props) {
   const results = props.results;
 
   function makeRequest(a) {
+    props.setSearching(true);
     if (!checkWin(a)) {
       axios
         .post("/api/get-links", { data: a })
         .then((res) => {
           props.resetAndSetSearchResults(res.data);
+          props.setPage(a)
           props.setNumClicks((clicks) => clicks + 1);
+          props.setSearching(false);
         })
         .catch((err) => {
           console.log(err.message);
+          props.setSearching(false);
         });
     } else {
       props.setWin(true);
+      props.setSearching(false);
     }
   }
 
@@ -28,21 +33,33 @@ function LinkHolder(props) {
     return false;
   }
 
+  const resultArr = makeSubArrays(results);
+
   return (
-    <ul style={{ listStyleType: "none" }}>
-      {results.length > 0 ? (
-        results.map((el, idx) => {
-          let displayEl = decodeURIComponent(el.split("_").join(" ").trim());
-          return (
-            <li key={idx} onClick={() => makeRequest(el)}>
-              <p>{displayEl}</p>
-            </li>
-          );
-        })
-      ) : (
-        <Spinner animation="grow" variant="info" />
-      )}
-    </ul>
+    <table id="link-table">
+      <tbody>
+        {resultArr
+          ? resultArr.map((a) => {
+              return (
+                <tr>
+                  {a.map((b) => {
+                    let displayEl = decodeURIComponent(b.split("_").join(" ").trim());
+                    return (
+                      <td
+                        onClick={() => {
+                          makeRequest(b);
+                        }}
+                      >
+                        {displayEl}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })
+          : ""}
+      </tbody>
+    </table>
   );
 }
 export default LinkHolder;

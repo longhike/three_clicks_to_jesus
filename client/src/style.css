@@ -1,0 +1,70 @@
+nav {
+  margin-bottom: 10px;
+}
+
+form {
+  width: 50%;
+  margin: auto;
+}
+
+li {
+  padding: 10px;
+}
+
+li:hover {
+  background-color: rgba(146, 146, 146, 0.5);
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+td {
+  width: min-content;
+  max-width: 250px;
+  overflow-x: auto;
+  overflow-wrap: normal;
+  padding-left: 5px;
+  border: 1px solid black;
+}
+
+td:hover {
+  background-color: rgba(146, 146, 146, 0.5);
+  cursor: pointer;
+}
+
+.container {
+  margin-bottom: 10px;
+}
+
+.modal-body {
+  background: none;
+  background-color: rgba(233, 236, 239, 0.6);
+}
+
+.modal-content {
+  background: none;
+  background-color: rgba(233, 236, 239, 0.6);
+}
+
+.modal-header {
+  background: none;
+  background-color: rgba(233, 236, 239, 0.6);
+}
+
+.navbar-text:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.spinner-grow {
+  margin: auto;
+}
+
+#top-ui-container {
+  text-align: center;
+}
