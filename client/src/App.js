@@ -43,7 +43,7 @@ function App() {
     setPage("");
     setNumClicks(0);
     setSearchTerm("");
-    setSearchResults((cur) => cur.splice(0, cur.length));
+    setSearchResults([]);
   }
   function doSearch() {
     if (searchTerm) {
