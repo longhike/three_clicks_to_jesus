@@ -7,7 +7,7 @@ async function wikiSearch(term) {
     const response = await axios.get(_url);
     return response;
   } catch (err) {
-    console.log(err.message);
+    return err.message;
   }
 }
 
@@ -29,8 +29,7 @@ async function wikiGetAndParseHTML(_url) {
             !_tag[i].includes("Main_Page") &&
             !_tag[i].includes("wikimedia")
           ) {
-            _tag[i] = _tag[i].split("/wiki/")[1].split('"')[0];
-            resArr.push(_tag[i]);
+            resArr.push(_tag[i].split("/wiki/")[1].split('"')[0])
           }
         }
       }

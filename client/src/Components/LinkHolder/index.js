@@ -27,7 +27,7 @@ function LinkHolder(props) {
   }
 
   function checkWin(term) {
-    if (term === "Jesus") {
+    if (term === "Jesus" || term === "Jesus Christ") {
       return true;
     }
     return false;

@@ -65,8 +65,11 @@ margin-right: 10px;
   color: #fff;
 }
 
-.spinner-grow {
+.spinner-holder {
+  width: 100%;
   margin: auto;
+  align-items: center;
+  text-align: center;
 }
 
 #top-ui-container {

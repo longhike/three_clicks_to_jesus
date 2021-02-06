@@ -8,7 +8,7 @@ import {
   ResultsHolder,
   SearchField,
 } from "./Components";
-import { Container, Navbar, Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 function App() {
@@ -16,8 +16,8 @@ function App() {
   const [modalView, setModalView] = useState(false);
   const [searching, setSearching] = useState(false);
   const [appState, setAppState] = useState("searching"); //decides which components will be rendered given the state: searching, playing, over_redo
-  const [page, setPage] = useState("");
-  const [numClicks, setNumClicks] = useState(0);
+  const [page, setPage] = useState(""); // the page whose links are currently being displayed
+  const [numClicks, setNumClicks] = useState(0); // number of times a user has clicked on a link after having chosen a start page
   const [searchTerm, setSearchTerm] = useState(""); // holds the search for the current term
   const [searchResults, setSearchResults] = useState([]); // holds the array of results from initial search
   useEffect(() => {
@@ -25,7 +25,7 @@ function App() {
       if (win) {
         setAppState("win");
       } else {
-        setAppState("done");
+        setAppState("lose");
       }
     }
   }, [win, numClicks]);
@@ -69,23 +69,18 @@ function App() {
   }
 
   function setTopUI(_state) {
-    switch (_state) {
-      case "searching":
-        return (
-          <SearchField
-            doSearch={doSearch}
-            setSearchTerm={setSearchTerm}
-            searchTerm={searchTerm}
-          />
-        );
-      case "playing":
-        return <GameInfoHolder numClicks={numClicks} page={page} />;
-      case "win":
-        return "You won!!!";
-      case "done":
-        return "Out of clicks - refresh to play again";
-      default:
-        return "";
+    if (_state === "searching") {
+      return (
+        <SearchField
+          doSearch={doSearch}
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+        />
+      );
+    } else {
+      return (
+        <GameInfoHolder appState={appState} numClicks={numClicks} page={page} />
+      );
     }
   }
 
@@ -111,12 +106,8 @@ function App() {
             setPage={setPage}
           />
         );
-      case "win":
-        return "";
-      case "done":
-        return "";
       default:
-        return "";
+        return;
     }
   }
 
@@ -137,17 +128,17 @@ function App() {
         )}
       </Container>
       {/* BOTTOM UI */}
-      {searching ? (
-        <Spinner animation="grow" variant="info" />
-      ) : (
-        <Container id="bottom-ui-container">
-          {appState ? (
-            setBottomUI(appState)
-          ) : (
+      <Container id="bottom-ui-container">
+        {searching ? (
+          <div className="spinner-holder">
             <Spinner animation="grow" variant="info" />
-          )}
-        </Container>
-      )}
+          </div>
+        ) : appState ? (
+          setBottomUI(appState)
+        ) : (
+          ""
+        )}
+      </Container>
       <InstructionModal modalView={modalView} setModalView={setModalView} />
     </div>
   );
