@@ -4,10 +4,11 @@ import { makeSubArrays } from "./util";
 
 function LinkHolder(props) {
   const results = props.results;
+  const target = props.target;
 
   function makeRequest(a) {
     props.setSearching(true);
-    if (!checkWin(a)) {
+    if (!checkWin(a, target)) {
       axios
         .post("/api/get-links", { data: a })
         .then((res) => {
@@ -26,8 +27,11 @@ function LinkHolder(props) {
     }
   }
 
-  function checkWin(term) {
-    if (term === "Jesus" || term === "Jesus Christ") {
+  function checkWin(term, t) {
+    let decodedTerm= decodeURIComponent(term.split("_").join(" ").trim().toLowerCase());
+    let decodedTarget= decodeURIComponent(t.split("_").join(" ").trim().toLowerCase());
+    console.log(decodedTerm, decodedTarget)
+    if (decodedTerm === decodedTarget) {
       return true;
     }
     return false;

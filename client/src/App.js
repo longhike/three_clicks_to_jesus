@@ -12,10 +12,11 @@ import { Container, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 function App() {
-  const [win, setWin] = useState(false);
-  const [modalView, setModalView] = useState(false);
-  const [searching, setSearching] = useState(false);
-  const [appState, setAppState] = useState("searching"); //decides which components will be rendered given the state: searching, playing, over_redo
+  const [target, setTarget] = useState("Jesus");
+  const [win, setWin] = useState(false); // boolean checking whether current choice is target
+  const [modalView, setModalView] = useState(false); // instruction modal view or not
+  const [searching, setSearching] = useState(false); // whether the request is in progress (will show loading graphic if so)
+  const [appState, setAppState] = useState("searching"); // decides which components will be rendered given the state: searching, playing, win, lose
   const [page, setPage] = useState(""); // the page whose links are currently being displayed
   const [numClicks, setNumClicks] = useState(0); // number of times a user has clicked on a link after having chosen a start page
   const [searchTerm, setSearchTerm] = useState(""); // holds the search for the current term
@@ -75,11 +76,18 @@ function App() {
           doSearch={doSearch}
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
+          target={target}
+          setTarget={setTarget}
         />
       );
     } else {
       return (
-        <GameInfoHolder appState={appState} numClicks={numClicks} page={page} />
+        <GameInfoHolder
+          appState={appState}
+          target={target}
+          numClicks={numClicks}
+          page={page}
+        />
       );
     }
   }
@@ -99,6 +107,7 @@ function App() {
         return (
           <LinkHolder
             results={searchResults}
+            target={target}
             resetAndSetSearchResults={resetAndSetSearchResults}
             setNumClicks={setNumClicks}
             setSearching={setSearching}

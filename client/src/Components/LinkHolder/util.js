@@ -16,3 +16,17 @@ export function makeSubArrays(arr) {
   }
   return res;
 }
+
+export function checkIfWon(a) {
+  for (let i = 0; i < a.length; i++) {
+    if (a[i].includes("Jesus")) {
+      let b = decodeURIComponent(a[i].split("_"));
+      if (b.length === 1) {
+        console.log(true)
+        return true;
+      }
+    }
+  }
+  console.log(false)
+  return false;
+}
