@@ -13,10 +13,9 @@ function InstructionModal(props) {
       </Modal.Header>
       <Modal.Body>
 
-          <p>Your goal is to get from the starting page to the "Jesus" page in three clicks.</p>
+          <p>Your goal is to get from the starting page to the target page in three clicks.</p>
         <p>
-          <strong>First, </strong>search for a start page by entering a search
-          term and clicking "Go." Note that this returns only the top twenty
+          <strong>First, </strong>search for a start page and target page. Note that this returns only the top twenty
           associated pages.
         </p>
         <p>When you find your starting page, click it, and the game begins.</p>
@@ -25,7 +24,7 @@ function InstructionModal(props) {
           page (we've filtered out most extraneous and utility links).
         </p>
         <p>
-          At this point, you have three total clicks to get to Jesus. 
+          At this point, you have three total clicks to get to your target page's link. If, after three clicks, the target link is on that page, click it to win. If not, you lose - either reset the game or click a link to get the loss message. 
         </p>
       </Modal.Body>
     </Modal>
